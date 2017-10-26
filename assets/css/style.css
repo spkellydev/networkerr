@@ -1,0 +1,16 @@
+:root {
+    --base: #E9F1F7;
+    --primary: #048EDD;
+    --secondary: #E7DFC6;
+    --black: #131B23;
+    --alternate: #816C61;
+
+}
+
+body {
+    background: var(--base);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary);
+}
