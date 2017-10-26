@@ -62,7 +62,10 @@
         
         while(x < company.emails.length) {
             var li = document.createElement('li')
-            var textNode = document.createTextNode(`${company.emails[x].value} Confidence: ${company.emails[x].confidence}% `);
+            var textNode = document.createTextNode(`
+                Email: ${company.emails[x].value} 
+                Confidence: ${company.emails[x].confidence}% 
+                Number of Sources: ${company.emails[x].sources.length}`);
             li.appendChild(textNode)
             hunterEmails.appendChild(li);
             x++;
