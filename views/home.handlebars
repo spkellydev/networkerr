@@ -2,7 +2,9 @@
 
 <p>{{{ body.description }}}</p>
 
-<input type="text" id="domain" />
+<form action="/" method="POST">
+    <input type="text" name="domain" id="domain" />
+</form>
 
 <p><span id="fill"></span></p>
 
@@ -31,7 +33,7 @@
     function keyup (e) {
         searchVal = e.target.value;
 
-        fill.innerHTML = `Searching for: ${searchVal}`;
+        fill.innerHTML = `Searching for: ${searchVal} ...press enter when ready`;
 
         if (e.keyCode == 13) {
             searchHunter(searchVal);
