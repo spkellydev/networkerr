@@ -1,1 +1,10 @@
-{{company}}
+<h1>{{company.domain}}</h1>
+
+<h2>Emails</h2>
+
+{{#each company.email}}
+    {{this}} <br>
+{{/each}}
+{{#each company.confidence}}
+    {{this}} <br>
+{{/each}}
