@@ -65,17 +65,16 @@ function outputHunter(response, res) {
       return data;
     });
   
-    // shorter, if you dont want to modify data or handle err here
+    // shorter, if dont want to modify data or handle err here
     // return company.save();
   }
 
-  function searchHunter(searchVal, res) {
+  function searchHunter(searchVal) {
     var CompanyData;
     // return the Promise, so we can know when it has finished
     return axios.get(hunterUrl + searchVal + hunterKey)
     .then(function (response) {
-      response = outputHunter(response.data.data, res);
-      CompanyData = response;
+      return outputHunter(response.data.data);
     })
     .catch(function (error) {
       console.error(error); throw error;
@@ -96,7 +95,8 @@ index.get('/', function (req, res) {
 });
 
 index.get('/:id', (req, res) => {
-    CompanyData.findById(req.params.id) // <== Specify your id here
+    console.log(req.params)
+    Company.findById(req.params.id) // <== Specify id here
     .then((doc) => {
       res.render('company', {company: doc})
     });
@@ -108,8 +108,8 @@ index.get('/:id', (req, res) => {
     .then(data => {
       // here the Promise is resolved and the doc has been fetched and saved
       console.log('doc fetched and saved');
-      console.log(data)
-      res.redirect('/' + data.id, {company: data});
+      console.log(data._id)
+      res.redirect('/' + data._id);
     });
     console.log('fired but not fetched and saved');
   });
