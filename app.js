@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 
 //Get static assets
-app.use(express.static(__dirname + '/assets'));
+app.use('/static', express.static(__dirname + '/assets'));
 app.set('views', path.join(__dirname, 'views'));
 
 //bodyparser middleware for reading form submission
@@ -25,6 +25,8 @@ app.set('view engine', 'handlebars');
 
 const index = require('./routes/index');
 app.use('/', index);
+const company = require('./routes/company');
+app.use('/company', company);
 
 app.use(function(err, req, res, next) {
 	res.status(err.status || 500 );
