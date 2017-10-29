@@ -105,7 +105,7 @@ index.get('/', function (req, res) {
 
 index.post('/', urlencodedParser, (req, res) => {
     // console.log(req.body);
-    searchHunter(req.body.domain, res)
+    searchHunter(req.body.domain, res);
 });
 
 module.exports = index;
