@@ -20,25 +20,22 @@ const company   = express.Router();
 const fullContactKey = `&apiKey=9a2268a7f55aff6f`
 const fullContactUrl = 'https://api.fullcontact.com/v2/company/lookup?domain=';
 
+function getFullContact(fullContactUrl, fullContactKey) {
+    
+}
 
-
-company.get('/company', function (req, res) {
-    //render response  from server using company view from declared path in app.js
+company.get('/', function (req, res) {
+    //render response  from server using home view from declared path in app.js
     res.render('home', {
-        title: "Networkerr home",
+        title: "Company Profile",
         body:
             {
-                description: 'The Place to Network',
+                description: 'Company Profiler',
             }
     });
 });
 
-company.get('/company/:id', (req, res) => {
-    Company.findById(req.params.id) // <== Specify id here
-    .then((doc) => {
-      res.render('company', {company: doc})
-    });
-  });
+
 
 
 

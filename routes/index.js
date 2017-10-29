@@ -12,7 +12,10 @@ const db = mongoose.connection;
 const companySchema = mongoose.Schema({
 	domain:{
 		type: String
-	},
+    },
+    name: {
+        type: String
+    },
 	email:{
         type: [String]
 	},
@@ -52,6 +55,7 @@ function outputHunter(response, res) {
   
     var company = new Company({
       domain: comp.domain,
+      name: comp.organization,
       email: em,
       confidence: c
     });
@@ -91,10 +95,30 @@ index.get('/', function (req, res) {
     });
 });
 
+var profile = {};
+function getFullContact(fullContactUrl, fullContactKey, domain){
+    return axios.get(fullContactUrl + domain + fullContactKey)
+    .then(function (response) {
+        profile = {
+            logo:response.data.logo
+        }
+        return profile;
+    })
+    .catch(function (error) {
+      console.error(error); throw error;
+    });
+}
 index.get('/company/:id', (req, res) => {
     Company.findById(req.params.id) // <== Specify id here
     .then((doc) => {
-      res.render('company', {company: doc})
+        const fullContactKey = `&apiKey=9a2268a7f55aff6f`
+        const fullContactUrl = 'https://api.fullcontact.com/v2/company/lookup?domain=';
+        getFullContact(fullContactUrl, fullContactKey, doc.domain).then(function(response) {
+            res.render('company', {company: doc, profile: profile})
+        })
+      
+        
+      
     });
   });
 
@@ -105,11 +129,10 @@ index.get('/company/:id', (req, res) => {
       // here the Promise is resolved and the doc has been fetched and saved
       console.log('doc fetched and saved');
       console.log(data._id)
-      res.redirect('/' + data._id);
+      res.redirect('/company/' + data._id);
     });
     console.log('fired but not fetched and saved');
   });
-
 
 
 module.exports = index;

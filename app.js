@@ -13,13 +13,22 @@ app.set('views', path.join(__dirname, 'views'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 //Handlebars engine
-app.engine('handlebars', hbs({helpers: {
-    toJSON : function(object) {
-    	return JSON.stringify(object);
-    }
-   }}));
+app.engine('handlebars', hbs({
+	defaultLayout: 'main', 
+	helpers: {
+	  JSON : function(object) {
+		return JSON.stringify(object);
+	  }
+	}
+  }));
 
-app.engine('handlebars', hbs({defaultLayout: 'main'}));
+// app.engine('handlebars', hbs({helpers: {
+//     toJSON : function(object) {
+//     	return JSON.stringify(object);
+//     }
+//    }}));
+
+// app.engine('handlebars', hbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 
