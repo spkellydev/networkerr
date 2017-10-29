@@ -1,22 +1,33 @@
 <h1>Company Profile: <small>{{company.domain}}</small></h1>
 
+
+
 <div class="row">
-    <div class="col-sm-5">
+    <div class="col-sm-12 col-md-6">
         {{#if company.email}}
             <h2>Emails</h2>
-        {{#each company.email}}
-            {{this}} <br>
+            <div class="row">
+        {{#each company.email as |email|}}
+        <div class="card fluid">
+            <div class="section">
+            <h3>{{email}}</h3>
+            <p>Confidence score: {{lookup ../company.confidence @index}}%</p>
+            </div>
+        </div>
         {{/each}}
-        {{#each company.confidence}}
-            {{this}} <br>
-        {{/each}}
+</div>
+            
+        
         {{else}}
         <h2>No emails found</h2>
         {{/if}}
     </div>
-    <div class="col-sm-7">
+
+    <div class="col-sm-12 col-md-6">
       <h3>{{company.name}}</h3>
       <img src="{{profile.logo}}" />
+      <h4>Approximately {{profile.employees}} employees</h4>
+      <p>{{profile.overview}}</p>
     </div>
   </div>
 

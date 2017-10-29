@@ -99,8 +99,12 @@ var profile = {};
 function getFullContact(fullContactUrl, fullContactKey, domain){
     return axios.get(fullContactUrl + domain + fullContactKey)
     .then(function (response) {
+        let res = response.data;
         profile = {
-            logo:response.data.logo
+            logo : res.logo,
+            employees: res.organization.approxEmployees,
+            overview: res.organization.overview
+
         }
         return profile;
     })
