@@ -15,19 +15,10 @@ const companySchema = mongoose.Schema({
 		type: String
 	},
 	email:{
-		type: String
+        type: [String]
 	},
 	confidence: {
-		type: Number
-	},
-	position: {
-		type: String
-	},
-	linkedIn: {
-		type: String
-	},
-	twitter: {
-		type: String
+		type: [Number]
 	},
 	create_date:{
 		type: Date,
@@ -53,27 +44,29 @@ const fullContactUrl = 'https://api.fullcontact.com/v2/company/lookup?domain=';
 
 function outputHunter(response, res) {
     let comp = response;
+    let em = [];
+    let c = [];
+
+        for (var i = 0; i < comp.emails.length; i++) {
+            //email arrays
+            // console.log(comp.emails[i].value);
+            em[i] = comp.emails[i].value;
+            c[i] = comp.emails[i].confidence;
+        }
     
-    console.log(comp.value);
-    //must loop through emails.length and store each entry into db
-    console.log(comp.emails);
-    
-    var data = new Company();
-    data.domain = comp.domain;
-    data.email = comp.emails.value;
-    data.confidence = comp.emails.confidence;
-    data.position = comp.emails.position;
-    data.linkedIn = comp.emails.linkedIn;
-    data.twitter = comp.emails.twitter;
+    var data = new Company({
+        domain: comp.domain,
+        email: em,
+        confidence: c
+    });
 
-    console.log(data);
+    // console.log(data);
 
-
-
-    var newCompany = Company(comp).save((err, data) => {
+    var newCompany = Company(data).save((err, data) => {
         if (err) throw err;
         //jsonify the Company data
-        // res.json(data);
+        //res.json(data);
+        console.log(data)
     });
 }
 
@@ -111,7 +104,7 @@ index.get('/', function (req, res) {
 });
 
 index.post('/', urlencodedParser, (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     searchHunter(req.body.domain, res)
 });
 
