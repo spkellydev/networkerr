@@ -37,9 +37,6 @@ const index   = express.Router();
 const hunterKey = '&api_key=223cc5a374942eae989483dc45366dca0f794fef';
 const hunterUrl = `https://api.hunter.io/v2/domain-search?domain=`;
 
-const fullContactKey = `&apiKey=9a2268a7f55aff6f`
-const fullContactUrl = 'https://api.fullcontact.com/v2/company/lookup?domain=';
-
 
 function outputHunter(response, res) {
     let comp = response;
@@ -94,8 +91,7 @@ index.get('/', function (req, res) {
     });
 });
 
-index.get('/:id', (req, res) => {
-    console.log(req.params)
+index.get('/company/:id', (req, res) => {
     Company.findById(req.params.id) // <== Specify id here
     .then((doc) => {
       res.render('company', {company: doc})
