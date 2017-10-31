@@ -99,7 +99,8 @@ var profile = {};
 function getFullContact(fullContactUrl, fullContactKey, domain){
     return axios.get(fullContactUrl + domain + fullContactKey)
     .then(function (response) {
-        let res = response.data;
+        if (response.data.status === 200) {
+            let res = response.data;
         profile = {
             logo : res.logo,
             employees: res.organization.approxEmployees,
@@ -107,9 +108,16 @@ function getFullContact(fullContactUrl, fullContactKey, domain){
 
         }
         return profile;
+        } else {
+            profile = null;
+            return profile;
+        }
+        
     })
     .catch(function (error) {
       console.error(error); throw error;
+      profile = null;
+      return profile;
     });
 }
 index.get('/company/:id', (req, res) => {
@@ -117,9 +125,14 @@ index.get('/company/:id', (req, res) => {
     .then((doc) => {
         const fullContactKey = `&apiKey=9a2268a7f55aff6f`
         const fullContactUrl = 'https://api.fullcontact.com/v2/company/lookup?domain=';
-        getFullContact(fullContactUrl, fullContactKey, doc.domain).then(function(response) {
+        //getFullContact(fullContactUrl, fullContactKey, doc.domain).then(function(response) {
+            profile = {
+                logo: 'https://d2ojpxxtu63wzl.cloudfront.net/static/bcf15f0c68537ba4a6c4dccda0377da0_a88fa4a36641d871be09cbd1a5368bf261ac2f1525f9e2d0c2472724e6c525ab',
+                employees: '500',
+                overview: 'Stripe.com was founded by two brilliant brothers, Patrick and John Collison (Born 1988 & 1990). Their business policies are a copy book study in why we should let kids grow up before giving them the keys to our livelihoods. Stripe.com has demonstrated institutional callous disregard to the welfare of others, as well as a myriad of other traits described in the DSM-V diagnosis criteria for narcissistic or anti-social personality disorders. An investigation into stripe.com, by licensed private investigator, has revealed that Stripe.com arbitrarily terminates processing accounts for legitimate and ethical businesses, even those that have had no charge-backs in their merchant history. Furthermore, and most disturbing, is the fact that Stripe.com staff arbitrarily decide to hold the funds are being collected on behalf of their clients for at least 90 days, and offer no explanation for this decision. Consequently, numerous businesses have been brought to their knees. Some of the small and medium businesses have begged stripe.com staff to pick up the telephone and talk to them one-on-one in hope of obtaining an explanation for the termination of the merchant account. One customer who had to have staff listen to more than 4000 recorded phone calls with clients in order to recover the credit card details, and subsequently reenter those details into the new processor off the stripe "nuked them".'
+            }
             res.render('company', {company: doc, profile: profile})
-        })
+        //})
       
         
       

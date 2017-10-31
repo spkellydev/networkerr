@@ -1,37 +1,102 @@
 <h1>Company Profile: <small>{{company.domain}}</small></h1>
 
-
-
 <div class="row">
     <div class="col-sm-12 col-md-6">
         {{#if company.email}}
             <h2>Emails</h2>
             <div class="row">
-        {{#each company.email as |email|}}
-        <div class="card fluid">
-            <div class="section">
-            <h3>{{email}}</h3>
-            <p>Confidence score: {{lookup ../company.confidence @index}}%</p>
+                {{#each company.email as |email|}}
+                <div class="card fluid" data-modal="email-modal">
+                    <div class="section">
+                        <h3 class="fc-email">{{email}}</h3>
+                        <p>Confidence score: {{lookup ../company.confidence @index}}%</p>
+                    </div>
+                </div>
+                {{/each}}
             </div>
-        </div>
-        {{/each}}
-</div>
-            
-        
         {{else}}
         <h2>No emails found</h2>
         {{/if}}
     </div>
 
     <div class="col-sm-12 col-md-6">
-      <h3>{{company.name}}</h3>
-      <img src="{{profile.logo}}" />
-      <h4>Approximately {{profile.employees}} employees</h4>
-      <p>{{profile.overview}}</p>
+        <h3>{{company.name}}</h3>
+        {{#if profile}}
+        <img src="{{profile.logo}}" />
+        <h4>Approximately {{profile.employees}} employees</h4>
+        <p class="lead">{{profile.overview}}</p>
+        {{/if}}
+    </div>
+</div>
+<div id="email-modal" class="modal">
+  <div class="modal-content">
+    <div class="contact-form">
+      <a class="close">&times;</a>
+      <h2 class="fc-email-modal">Email will go Here</h2><br>
+      <p class="fc-email-modal-data"></p>
     </div>
   </div>
+</div>
 
 <script>
     const fullContactKey = `&apiKey=9a2268a7f55aff6f`
-    const fullContactUrl = 'https://api.fullcontact.com/v2/company/lookup?domain=';
+    const fullContactUrl = 'https://api.fullcontact.com/v2/person.json?email=';
+    var person;
+
+    function getFullContactPersonal(fullContactUrl, fullContactKey, email){
+    return axios.get(fullContactUrl + email + fullContactKey)
+    .then(function (response) {
+        if (response.data.status === 200) {
+            let res = response.data;
+            //console.log(response.data.contactInfo.fullName)
+        person = {
+            fullName: res.contactInfo.fullName,
+            position: res.organizations[0].title
+        }
+        return person;
+        } else {
+            person = null;
+            return person;
+        }
+        
+    })
+    .catch(function (error) {
+      console.error(error); throw error;
+      person = null;
+      return person;
+    });
+}
+
+    var modalBtns = [...document.querySelectorAll(".card")];
+    modalBtns.forEach(function(btn){
+    btn.onclick = function() {
+        var email = btn.firstElementChild.firstElementChild.innerHTML;
+        var persona;
+        //console.log(email);
+        var modal = btn.getAttribute('data-modal');
+        let fcEmailModal = document.querySelector(".fc-email-modal");
+        let fcEmailModalData = document.querySelector('.fc-email-modal-data');
+        getFullContactPersonal(fullContactUrl, fullContactKey, email).then(function(response) {
+            let persona = response;
+            console.log(persona)
+            fcEmailModal.innerHTML = email;
+            fcEmailModalData.innerHTML = persona.fullName + ' <small>Position:' + persona.position + '</small>';
+        })
+        
+        document.getElementById(modal).style.display = "block";
+    }
+    });
+    var closeBtns = [...document.querySelectorAll(".close")];
+    closeBtns.forEach(function(btn){
+    btn.onclick = function() {
+        var modal = btn.closest('.modal');
+        modal.style.display = "none";
+    }
+    });
+
+    window.onclick = function(event) {
+    if (event.target.className === "modal") {
+        event.target.style.display = "none";
+    }
+    }
 </script>
