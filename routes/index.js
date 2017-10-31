@@ -87,7 +87,7 @@ function outputHunter(response, res) {
 index.get('/', function (req, res) {
     //render response  from server using index view from declared path in app.js
     res.render('home', {
-        title: "Networkerr home",
+        title: "Networkerr",
         body:
             {
                 description: 'The Place to Network',
