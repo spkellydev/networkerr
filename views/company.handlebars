@@ -1,4 +1,4 @@
-<h1>Company Profile: <small>{{company.domain}}</small></h1>
+<h1>Company Profile: {{company.name}}<small><a href="//{{company.domain}}" target="_blank">{{company.domain}}</a></small></h1>
 
 <div class="row">
     <div class="col-sm-12 col-md-6">
@@ -6,10 +6,11 @@
             <h2>Emails</h2>
             <div class="row">
                 {{#each company.email as |email|}}
-                <div class="card fluid" data-modal="email-modal">
+                <div class="card responsive-padding responsive-margin shadowed rounded" data-modal="email-modal">
                     <div class="section">
                         <h3 class="fc-email">{{email}}</h3>
                         <p>Confidence score: {{lookup ../company.confidence @index}}%</p>
+                        <progress class="tertiary rounded" value="{{lookup ../company.confidence @index}}" max="100"></progress>
                     </div>
                 </div>
                 {{/each}}
@@ -19,7 +20,7 @@
         {{/if}}
     </div>
 
-    <div class="col-sm-12 col-md-6">
+    <div class="col-sm-12 col-md-6 col-sm-first col-md-last">
         <h3>{{company.name}}</h3>
         {{#if profile}}
         <img src="{{profile.logo}}" />
@@ -31,7 +32,7 @@
 <div id="email-modal" class="modal">
   <div class="modal-content">
     <div class="contact-form">
-      <a class="close">&times;</a>
+      <a class="close"></a>
       <h2 class="fc-email-modal">Email will go Here</h2><br>
       <p class="fc-email-modal-data"></p>
     </div>
