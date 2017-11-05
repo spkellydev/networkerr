@@ -26,7 +26,9 @@
         <img src="{{profile.logo}}" />
         <h4>Approximately {{profile.employees}} employees</h4>
         <h5><small>{{profile.phone}}</small></h5>
+        {{#if profile.address.street}}
         <h5><small>{{ profile.address.street}}, {{ profile.address.city}}, {{ profile.address.region}}</small></h5>
+        {{/if}}
         <p class="lead">{{profile.overview}}</p>
         <ul class="company-profile-keywords">
             {{#each profile.keywords}}
@@ -41,6 +43,7 @@
     <div class="contact-form">
       <a class="close"></a>
       <h2 class="fc-email-modal">Email will go Here</h2><br>
+      <div class="fc-email-modal-social"></div>
       <p class="fc-email-modal-data"></p>
       <div class="fc-email-modal-photos"></div>
     </div>
@@ -61,7 +64,8 @@
         person = {
             fullName: res.contactInfo.fullName,
             position: res.organizations[0].title,
-            photos: [res.photos]
+            photos: [res.photos],
+            social: [res.socialProfiles]
         }
         return person;
         } else {
@@ -86,15 +90,35 @@
         var modal = btn.getAttribute('data-modal');
         let fcEmailModal = document.querySelector(".fc-email-modal");
         let fcEmailModalData = document.querySelector('.fc-email-modal-data');
+        let fcEmailModalSocial = document.querySelector('.fc-email-modal-social');
         let fcEmailModalPhotos = document.querySelector('.fc-email-modal-photos');
         getFullContactPersonal(fullContactUrl, fullContactKey, email).then(function(response) {
+            fcEmailModalPhotos.innerHTML = '';
+            fcEmailModalSocial.innerHTML = '';
+            fcEmailModal.innerHTML = '';
+            fcEmailModalData.innerHTML = '';
             let persona = response;
             fcEmailModal.innerHTML = email;
             fcEmailModalData.innerHTML = persona.fullName + ' <small>Position:' + persona.position + '</small>';
             if (persona.photos) {
                 //find a way to output photos to modal
-                for(var i = 0; i<persona.photos.length; i++) {
-                    fcEmailModalPhotos.innerHTML += `<img src=${persona.photos[i].url}>`;
+                for(var i = 0; i<persona.photos[0].length; i++) {
+                    fcEmailModalSocial.innerHTML += `
+                        <a href="${persona.social[0][i].url}" title='${email} on ${persona.social[0][i].typeName}' target="_blank" rel="nooopener">
+                        <mark class='tag tertiary'>${persona.social[0][i].typeName}</mark>
+                        </a>
+                    `;
+                    fcEmailModalPhotos.innerHTML += `
+                            <span 
+                                class="tooltip" 
+                                aria-label="Image provided by ${persona.photos[0][i].typeName}"
+                            >
+                                <img 
+                                    class='rounded'
+                                    src=${persona.photos[0][i].url} 
+                                    alt='Photo of ${email} from ${persona.photos[0][i].typeName}'
+                                />
+                            </span>`;
                 }
                 
             }
