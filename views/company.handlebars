@@ -25,7 +25,14 @@
         {{#if profile}}
         <img src="{{profile.logo}}" />
         <h4>Approximately {{profile.employees}} employees</h4>
+        <h5><small>{{profile.phone}}</small></h5>
+        <h5><small>{{ profile.address.street}}, {{ profile.address.city}}, {{ profile.address.region}}</small></h5>
         <p class="lead">{{profile.overview}}</p>
+        <ul class="company-profile-keywords">
+            {{#each profile.keywords}}
+            <li><mark class="tag">{{this}}</mark></li>
+            {{/each}}
+        </ul>
         {{/if}}
     </div>
 </div>
@@ -35,6 +42,7 @@
       <a class="close"></a>
       <h2 class="fc-email-modal">Email will go Here</h2><br>
       <p class="fc-email-modal-data"></p>
+      <div class="fc-email-modal-photos"></div>
     </div>
   </div>
 </div>
@@ -52,7 +60,8 @@
             //console.log(response.data.contactInfo.fullName)
         person = {
             fullName: res.contactInfo.fullName,
-            position: res.organizations[0].title
+            position: res.organizations[0].title,
+            photos: [res.photos]
         }
         return person;
         } else {
@@ -77,11 +86,18 @@
         var modal = btn.getAttribute('data-modal');
         let fcEmailModal = document.querySelector(".fc-email-modal");
         let fcEmailModalData = document.querySelector('.fc-email-modal-data');
+        let fcEmailModalPhotos = document.querySelector('.fc-email-modal-photos');
         getFullContactPersonal(fullContactUrl, fullContactKey, email).then(function(response) {
             let persona = response;
-            console.log(persona)
             fcEmailModal.innerHTML = email;
             fcEmailModalData.innerHTML = persona.fullName + ' <small>Position:' + persona.position + '</small>';
+            if (persona.photos) {
+                //find a way to output photos to modal
+                for(var i = 0; i<persona.photos.length; i++) {
+                    fcEmailModalPhotos.innerHTML += `<img src=${persona.photos[i].url}>`;
+                }
+                
+            }
         })
         
         document.getElementById(modal).style.display = "block";

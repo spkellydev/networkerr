@@ -35,6 +35,14 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid #888;
     width: 90%; /* Could be more or less, depending on screen size */
 }
+.company-profile-keywords li {
+    display: inline;
+    list-style-type: none;
+}
+.company-profile-keywords li mark {
+    font-size: .85em;
+    display: inline-block;
+}
 
 @media (min-width: 1366px) {
     .modal-content {
