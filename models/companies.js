@@ -1,33 +1,30 @@
-const mongoose = require('mongoose');
-
 //Create Schema for the application to interact with MongoDB
+const ProfileSchema = mongoose.Schema ({
+    logo: String,
+    employees: Number,
+    overview: String
+});
 
-const companies = mongoose.Schema({
+const companySchema = mongoose.Schema({
 	domain:{
 		type: String
-	},
+    },
+    name: {
+        type: String
+    },
 	email:{
-		type: String
+        type: [String]
 	},
 	confidence: {
-		type: Number
-	},
-	sources: {
-		type: [String]
-	},
-	position: {
-		type: String
-	},
-	linkedIn: {
-		type: String
-	},
-	twitter: {
-		type: String
-	},
+		type: [Number]
+    },
+    profile: [ProfileSchema],
 	create_date:{
 		type: Date,
 		default: Date.now
 	}
-});
+}, {collection: 'companies'});
 
-var Company = module.exports = mongoose.model('Company', companies);
+const Company = mongoose.model('Company', companySchema);
+
+module export default Company;
