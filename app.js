@@ -36,6 +36,8 @@ const index = require('./routes/index');
 app.use('/', index);
 const company = require('./routes/company');
 app.use('/company', company);
+const login = require('./routes/login');
+app.use('/login', login)
 
 app.use(function(err, req, res, next) {
 	res.status(err.status || 500 );
