@@ -91,6 +91,7 @@ function outputHunter(response, res) {
 
 //use declare router for http methods
 //get request for index with request, response, next params
+//index.get('/', ensureAuthenticated, function (req, res) {
 index.get('/', function (req, res) {
     //render response  from server using index view from declared path in app.js
     res.render('home', {
@@ -101,6 +102,16 @@ index.get('/', function (req, res) {
             }
     });
 });
+
+function ensureAuthenticated(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	} else {
+		//req.flash('error_msg','You are not logged in');
+		res.redirect('/users/login');
+	}
+}
+
 
 var profile = {};
 function getFullContact(fullContactUrl, fullContactKey, domain){
