@@ -129,7 +129,8 @@ function getFullContact(fullContactUrl, fullContactKey, domain){
                     city: res.organization.contactInfo.addresses[0].locality,
                     region: res.organization.contactInfo.addresses[0].region.code
                 },
-                keywords: res.organization.keywords
+                keywords: res.organization.keywords,
+                social: [res.socialProfiles]
             }
             return profile;
         } else {

@@ -3,21 +3,37 @@
 <div class="col-md-6 col-md-offset-3">
 <form action="/submit" method="POST">
     <label style="display:block" class="text-center" for="domain"><strong>Enter a Website to Find Email Address of people to Network with!</strong></label>
-    <div class="input-group fluid text-center">
-        <input type="text" name="domain" id="domain" placeholder="Example: stripe.com" />
+    <div class="text-center">
+        <input style="width: 100%;" type="text" name="domain" id="domain" placeholder="Example: stripe.com" />
     </div>
     <div class="text-center">
-        <input type="submit" class="primary text-center" role="button" value="Search For People To Connect With" />
+        <input type="submit" id="search" class="primary text-center" role="button" value="Search For People To Connect With" />
     </div>
 </form>
-<div class="row">  
-  <div class="col-sm-1">
-    <img src="https://www.fillmurray.com/g/200/300">
+
+<h3>Featured Company:</h3>
+<div class="row">
+  <div class="col-sm-3">
+    <img src="https://d2ojpxxtu63wzl.cloudfront.net/static/358286f7b8e609b196495469b8491d6c_8635bdb40b4a74225d602c44f6ace41b79d5a3e6e9c013b4c1817b6a8becef4e">
+    <p><small>Founder: David Chait<br>Lincoln, NE<br>Approx 6 Employees</small></p>
   </div>
-  <div class="col-sm col-md-3">
-    <h2>Media object heading</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, earum illo ipsam illum consectetur ea a sit, ab, accusamus temporibus incidunt possimus! Aperiam aut natus soluta totam, molestiae velit suscipit.</p>
-    <a href="#">Learn More</a>
+  <div class="col-sm">
+    <h2>Travefy</h2>
+    <p>Travefy (https://travefy.com) is the easiest group travel planner. Through Travefy, groups can collaborate on trip details, build rich itineraries, and collect shared expenses so no one is stuck with the bill. Travefy is available directly to consumers and branded Pro versions are available for travel brands, suppliers, and agents among others. Travefy has been featured in The New York Times, Forbes, Fast Company, and U.S. News and World Report among other publications and has won numerous innovation awards.</p>
+    <a role="button" href="/company/5a0132dc2fa63025081af905">Learn More</a>
   </div>
 </div>
-</div>
+
+<hr></div>
+<div class="text-center"><a href="#" class="text-center" role="button">Explore All Companies</a></div>
+
+<script>
+    window.onkeyup = keyup;
+    let domain = document.querySelector('#domain');
+    let search = document.querySelector('#search');
+
+    function keyup (e) {
+        searchVal = e.target.value;
+        search.value = `Search... ${searchVal} for contacts`;
+    }
+</script>
