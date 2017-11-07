@@ -46,6 +46,8 @@
       <div class="fc-email-modal-social"></div>
       <p class="fc-email-modal-data"></p>
       <div class="fc-email-modal-photos"></div>
+      <div class="fc-email-modal-bio"></div>
+      <div class="fc-email-modal-topics"></div>
     </div>
   </div>
 </div>
@@ -65,7 +67,8 @@
             fullName: res.contactInfo.fullName,
             position: res.organizations[0].title,
             photos: [res.photos],
-            social: [res.socialProfiles]
+            social: [res.socialProfiles],
+            topics: [res.digitalFootprint]
         }
         return person;
         } else {
@@ -92,11 +95,16 @@
         let fcEmailModalData = document.querySelector('.fc-email-modal-data');
         let fcEmailModalSocial = document.querySelector('.fc-email-modal-social');
         let fcEmailModalPhotos = document.querySelector('.fc-email-modal-photos');
+        let fcEmailModalBio = document.querySelector('.fc-email-modal-bio');  
+        let fcEmailModalTopics = document.querySelector('.fc-email-modal-topics');        
+              
         getFullContactPersonal(fullContactUrl, fullContactKey, email).then(function(response) {
             fcEmailModalPhotos.innerHTML = '';
             fcEmailModalSocial.innerHTML = '';
             fcEmailModal.innerHTML = '';
             fcEmailModalData.innerHTML = '';
+            fcEmailModalBio.innerHTML = '';
+            fcEmailModalTopics.innerHTML = '';            
             let persona = response;
             fcEmailModal.innerHTML = email;
             fcEmailModalData.innerHTML = persona.fullName + ' <small>Position:' + persona.position + '</small>';
@@ -119,6 +127,15 @@
                                     alt='Photo of ${email} from ${persona.photos[0][i].typeName}'
                                 />
                             </span>`;
+                    if (persona.social[0][i].bio) {
+                        fcEmailModalBio.innerHTML += `<blockquote cite="${persona.social[0][i].typeName}">${persona.social[0][i].bio}</blockquote>`;
+                    }
+
+                    if (persona.topics[0].topics[i].value) {
+                        fcEmailModalTopics.innerHTML += `
+                            <mark class="tag primary">${persona.topics[0].topics[i].value}</mark>
+                        `;
+                    }
                 }
                 
             }
