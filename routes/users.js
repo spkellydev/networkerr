@@ -15,6 +15,15 @@ router.get('/login', function(req, res){
 	res.render('login');
 });
 
+router.get('/profile', function (req, res) {
+	res.render('profile', {
+		title: 'User Profile',
+		body: {
+			description: 'From here you can control all of your settings'
+		}
+	})
+})
+
 // Register User
 router.post('/register', function(req, res){
 	var name = req.body.name;
@@ -98,5 +107,8 @@ router.get('/logout', function(req, res){
 
 	res.redirect('/users/login');
 });
+
+
+
 
 module.exports = router;

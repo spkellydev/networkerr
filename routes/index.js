@@ -2,7 +2,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+// const Company = require('../models/company');
 
 //Connect to mongoDB
 mongoose.connect('mongodb://testy:testy@ds239965.mlab.com:39965/companies');
@@ -14,6 +15,10 @@ const ProfileSchema = mongoose.Schema ({
     employees: Number,
     overview: String
 });
+
+/*  MOVED TO COMPANY.JS under ../models */
+
+
 
 const companySchema = mongoose.Schema({
 	domain:{
@@ -35,7 +40,7 @@ const companySchema = mongoose.Schema({
 	}
 }, {collection: 'companies'});
 
-const Company = mongoose.model('Company', companySchema);
+const Company = mongoose.model('Company', companySchema); 
 
 //bodyparser middleware for reading form submission
 var urlencodedParser = bodyParser.urlencoded({ extended: false });

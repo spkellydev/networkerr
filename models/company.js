@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 //Create Schema for the application to interact with MongoDB
 const ProfileSchema = mongoose.Schema ({
     logo: String,
@@ -27,4 +29,4 @@ const companySchema = mongoose.Schema({
 
 const Company = mongoose.model('Company', companySchema);
 
-module export default Company;
+module.exports = Company;
