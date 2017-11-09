@@ -36,6 +36,7 @@ router.post('/profile/:id', function (req, res) {
 		var name = req.body.name;
 		var email = req.body.email;
 		var username = req.body.username;
+		var avatar = req.body.avatar;
 	
 		// Validation
 		req.checkBody('name', 'Name is required').notEmpty();
@@ -52,6 +53,7 @@ router.post('/profile/:id', function (req, res) {
 			foundUser.name = name;
 			foundUser.username = username;
 			foundUser.email = email;
+			foundUser.avatar = avatar;
 
 			foundUser.save(function(err, updatedUser){
 				if (err) {
