@@ -15,11 +15,54 @@ router.get('/login', function(req, res){
 	res.render('login');
 });
 
-router.get('/profile', function (req, res) {
-	res.render('profile', {
-		title: 'User Profile',
-		body: {
-			description: 'From here you can control all of your settings'
+router.get('/profile/:id', function (req, res) {
+	User.findById(req.params.id, function(err, foundUser) {
+		if(err) {
+			req.flash('error', 'no user');
+			res.redirect('/');
+		}
+		res.render('profile', {
+			title: 'User Profile',
+			body: {
+				description: 'From here you can control all of your settings'
+			},
+			User: foundUser
+		})
+	})
+})
+
+router.post('/profile/:id', function (req, res) {
+	User.findById(req.params.id, function(err, foundUser) {
+		var name = req.body.name;
+		var email = req.body.email;
+		var username = req.body.username;
+	
+		// Validation
+		req.checkBody('name', 'Name is required').notEmpty();
+		req.checkBody('email', 'Email is required').notEmpty();
+		req.checkBody('email', 'Email is not valid').isEmail();
+		req.checkBody('username', 'Username is required').notEmpty();
+
+	
+		var errors = req.validationErrors();
+		if(err) {
+			req.flash('error', 'no user');
+			res.redirect('/');
+		} else {
+			foundUser.name = name;
+			foundUser.username = username;
+			foundUser.email = email;
+
+			foundUser.save(function(err, updatedUser){
+				if (err) {
+					req.flash('error', 'no user');
+					console.log(err)
+				} else {
+					req.flash('success_msg', 'You updated your account');
+					res.redirect(req.originalUrl);
+					
+				}
+			})
 		}
 	})
 })
@@ -70,7 +113,7 @@ passport.use(new LocalStrategy(
    User.getUserByUsername(username, function(err, user){
    	if(err) throw err;
    	if(!user){
-   		return done(null, false, {message: 'Unknown User'});
+   		return done(null, false, {message: 'This user could not be found! Try again!'});
    	}
 
    	User.comparePassword(password, user.password, function(err, isMatch){
