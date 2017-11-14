@@ -52,15 +52,15 @@
   </div>
 </div>
 
-{{#each profile.social}}
+{{!-- {{#each profile.social}}
     {{#with (lookup this) @index}}
         {{typeName}}
     {{/with}}
-{{/each}}
+{{/each}} --}}
 
 <script>
     console.log({{{JSON profile.social}}})
-    const fullContactKey = `&apiKey=9a2268a7f55aff6f`
+    const fullContactKey = `&apiKey=3a37eb6865a25421`
     const fullContactUrl = 'https://api.fullcontact.com/v2/person.json?email=';
     var person;
 

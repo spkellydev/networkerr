@@ -153,7 +153,7 @@ function getFullContact(fullContactUrl, fullContactKey, domain){
 index.get('/company/:id', (req, res) => {
     Company.findById(req.params.id) // <== Specify id here
     .then((doc) => {
-        const fullContactKey = `&apiKey=9a2268a7f55aff6f`
+        const fullContactKey = `&apiKey=3a37eb6865a25421`
         const fullContactUrl = 'https://api.fullcontact.com/v2/company/lookup?domain=';
         getFullContact(fullContactUrl, fullContactKey, doc.domain).then(function(response) {
             // profile = {
