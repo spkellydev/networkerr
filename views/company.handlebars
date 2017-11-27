@@ -63,7 +63,6 @@
     const fullContactKey = `&apiKey=3a37eb6865a25421`
     const fullContactUrl = 'https://api.fullcontact.com/v2/person.json?email=';
     var person;
-
     function getFullContactPersonal(fullContactUrl, fullContactKey, email){
     return axios.get(fullContactUrl + email + fullContactKey)
     .then(function (response) {
@@ -90,7 +89,6 @@
       return person;
     });
 }
-
     var modalBtns = [...document.querySelectorAll(".card")];
     modalBtns.forEach(function(btn){
     btn.onclick = function() {
@@ -137,7 +135,6 @@
                     if (persona.social[0][i].bio) {
                         fcEmailModalBio.innerHTML += `<blockquote cite="${persona.social[0][i].typeName}">${persona.social[0][i].bio}</blockquote>`;
                     }
-
                     if (persona.topics[0].topics[i].value) {
                         fcEmailModalTopics.innerHTML += `
                             <mark class="tag primary">${persona.topics[0].topics[i].value}</mark>
@@ -158,7 +155,6 @@
         modal.style.display = "none";
     }
     });
-
     window.onclick = function(event) {
     if (event.target.className === "modal") {
         event.target.style.display = "none";
