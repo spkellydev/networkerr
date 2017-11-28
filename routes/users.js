@@ -15,6 +15,22 @@ router.get('/login', function(req, res){
 	res.render('login');
 });
 
+router.get('/:username', function (req, res) {
+	User.getUserByUsername(req.params.username, function(err, foundUser) {
+		if(err) {
+			req.flash('error', 'no user');
+			res.redirect('/');
+		}
+		res.render('profilePublic', {
+			title: 'User Profile',
+			body: {
+				description: 'From here you can control all of your settings'
+			},
+			User: foundUser
+		})
+	})
+})
+
 router.get('/profile/:id', function (req, res) {
 	User.findById(req.params.id, function(err, foundUser) {
 		if(err) {

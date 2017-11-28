@@ -1,8 +1,9 @@
 <h2>{{title}}</h2>
 
 
-<p>{{body.description}}</p>
+<p>{{body.description}} <a target="_blank" href="/users/{{ user.username }}">View Public Profile</a></p>
 {{#if user}}
+
 <img src="{{user.avatar}}" alt="{{user.name}} on Networkerr">
 <form method="post" action="/users/profile/{{user.id}}">
    <div class="form-group">
