@@ -15,29 +15,32 @@ router.get('/login', function(req, res){
 	res.render('login');
 });
 
+
+//add a route for username for public profile
 router.get('/:username', function (req, res) {
 	User.getUserByUsername(req.params.username, function(err, foundUser) {
 		if(err) {
 			req.flash('error', 'no user');
 			res.redirect('/');
 		}
-		res.render('profilePublic', {
+		res.render('profile/profilePublic', {
 			title: 'User Profile',
 			body: {
-				description: 'From here you can control all of your settings'
+				description: 'Public Persona'
 			},
 			User: foundUser
 		})
 	})
 })
 
+//should force redirect if user is not logged in --> local strategy?
 router.get('/profile/:id', function (req, res) {
 	User.findById(req.params.id, function(err, foundUser) {
 		if(err) {
 			req.flash('error', 'no user');
 			res.redirect('/');
 		}
-		res.render('profile', {
+		res.render('profile/profile', {
 			title: 'User Profile',
 			body: {
 				description: 'From here you can control all of your settings'
