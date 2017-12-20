@@ -23,16 +23,16 @@
     <div class="col-sm-12 col-md-6 col-sm-first col-md-last">
         <h3>{{company.name}}</h3>
         {{#if profile}}
-        <img src="{{profile.logo}}" />
-        <h4>Approximately {{profile.employees}} employees</h4>
-        <h5><small>{{profile.phone}}</small></h5>
-        {{#if profile.address.street}}
-        <h5><small>{{ profile.address.street}}, {{ profile.address.city}}, {{ profile.address.region}}</small></h5>
-        {{/if}}
+            <img src="{{profile.logo}}" />
+            <h4>Approximately {{profile.employees}} employees</h4>
+            <h5><small>{{profile.phone}}</small></h5>
+            {{#if profile.address.street}}
+                <h5><small>{{ profile.address.street}}, {{ profile.address.city}}, {{ profile.address.region}}</small></h5>
+            {{/if}}
         <p class="lead">{{profile.overview}}</p>
         <ul class="company-profile-keywords">
             {{#each profile.keywords}}
-            <li><mark class="tag">{{this}}</mark></li>
+                <li><mark class="tag">{{this}}</mark></li>
             {{/each}}
         </ul>
         {{/if}}
