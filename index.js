@@ -1,24 +1,24 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-var hbs = require('express-handlebars');
+let hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var expressValidator = require('express-validator');
-var flash = require('connect-flash');
-var session = require('express-session');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
-
-var users = require('./routes/users');
+let cookieParser = require('cookie-parser');
+let expressValidator = require('express-validator');
+let flash = require('connect-flash');
+let session = require('express-session');
+let passport = require('passport');
+let LocalStrategy = require('passport-local').Strategy;
+let mongo = require('mongodb');
+let mongoose = require('mongoose');
+let PORT = process.env.PORT || 3000;
+let users = require('./routes/users');
 //Get static assets
 app.use('/static', express.static(__dirname + '/assets'));
 app.set('views', path.join(__dirname, 'views'));
 
 //bodyparser middleware for reading form submission
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+let urlencodedParser = bodyParser.urlencoded({ extended: false })
 // BodyParser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -93,4 +93,4 @@ app.use(function(err, req, res, next) {
 	})
 });
 
-app.listen(3000, console.log('running on port 3000'));
+app.listen(PORT, console.log('running on port 3000'));
