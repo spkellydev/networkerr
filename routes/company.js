@@ -5,7 +5,7 @@ const axios = require('axios');
 const mongoose = require('mongoose')
 
 //Connect to mongoDB
-mongoose.connect('mongodb://testy:testy@ds239965.mlab.com:39965/companies');
+mongoose.connect('mongodb://heroks:seankelly@ds125618.mlab.com:25618/heroku_nzn8tvtz');
 const db = mongoose.connection;
 
 
