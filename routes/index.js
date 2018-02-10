@@ -125,7 +125,7 @@ function getFullContact(fullContactUrl, fullContactKey, domain){
         if (response.data.status === 200) {
             let res = response.data;
             profile = {
-                logo : res.logo,
+                logo: res.logo,
                 employees: res.organization.approxEmployees,
                 overview: res.organization.overview,
                 phone: res.organization.contactInfo.phoneNumbers[0].number,
@@ -150,8 +150,10 @@ function getFullContact(fullContactUrl, fullContactKey, domain){
       return profile;
     });
 }
+
 index.get('/company/:id', (req, res) => {
     Company.findById(req.params.id) // <== Specify id here
+    //document of the company is being returned by mongodb
     .then((doc) => {
         const fullContactKey = `&apiKey=3a37eb6865a25421`
         const fullContactUrl = 'https://api.fullcontact.com/v2/company/lookup?domain=';
